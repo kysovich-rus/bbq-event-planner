@@ -24,11 +24,11 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav ms-auto">
             <% if user_signed_in? %>
-              <%= link_to 'Мой профиль', current_user, class: "nav-link" %>
-              <%= link_to 'Выйти', destroy_user_session_path, method: :delete, class: "nav-link" %>
+              <%= link_to 'Мой профиль', current_user, class: "nav-link btn " %>
+              <%= button_to 'Выйти', destroy_user_session_path, method: :delete, class: "nav-link btn" %>
             <% else %>
-              <%= link_to 'Войти', new_user_session_path, class: "nav-link" %>
-              <%= link_to 'Регистрация', new_user_registration_path, class: "nav-link" %>
+              <%= link_to 'Войти', new_user_session_path, class: "nav-link btn" %>
+              <%= link_to 'Регистрация', new_user_registration_path, class: "nav-link btn" %>
             <% end %>
           </div>
         </div>
@@ -36,25 +36,34 @@
     </nav>
 
     <div class="container">
+      <% if notice.present? %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <%= notice %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <%= alert %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
       <div class="row">
         <div class="col-lg-9">
-          <% if notice %>
-            <p class="notice text-success"><%= notice %></p>
-          <% end %>
-          <% if alert %>
-            <p class="alert text-danger"><%= alert %></p>
-          <% end %>
+
           <%= yield %>
         </div>
-        <div class="col-lg-3">
-          <div class="nav flex-column mt-4">
-            <ul class="list-group">
-              <li class="list-group-item"><%= link_to "Link1", "#", class: "nav-link text-reset py-1" %></li>
-              <li class="list-group-item"><%= link_to "Link2", "#", class: "nav-link text-reset py-1" %></li>
-              <li class="list-group-item"><%= link_to "Link3", "#", class: "nav-link text-reset py-1" %></li>
-            </ul>
+        <% if user_signed_in? %>
+          <div class="col-lg-3">
+            <div class="nav flex-column mt-4">
+              <ul class="list-group">
+                <li class="list-group-item"><%= link_to "Link1", "#", class: "nav-link text-reset py-1" %></li>
+                <li class="list-group-item"><%= link_to "Link2", "#", class: "nav-link text-reset py-1" %></li>
+                <li class="list-group-item"><%= link_to "Link3", "#", class: "nav-link text-reset py-1" %></li>
+              </ul>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     </div>
   </body>
