@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user_can_edit?
 
+  private
+
   def current_user_can_edit?(event)
     user_signed_in? && event.user == current_user
   end
@@ -12,5 +14,9 @@ class ApplicationController < ActionController::Base
     :account_update,
     keys: %i[password password_confirmation current_password]
     )
+  end
+
+  def redirect_with_alert
+    redirect_to root_path, alert: 'Доступ запрещен!'
   end
 end
