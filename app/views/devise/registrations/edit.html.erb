@@ -1,10 +1,10 @@
-<h2 class="display-4">Смена пароля</h2>
+<h2 class="display-4"><%= I18n.t('titles.user.edit_registration') %></h2>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }, data: { turbo: false }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :password, "Новый пароль" %> <i>(пустое поле не изменит пароль)</i><br />
+    <%= f.label :password %><br />
     <%= f.password_field :password, autocomplete: "new-password",
                          class: "form-control" %>
     <% if @minimum_password_length %>
@@ -14,28 +14,28 @@
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation, "Повторите новый пароль" %><br />
+    <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password",
                          class: "form-control" %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password, "Текущий пароль" %> <i>(для подтверждения)</i><br />
+    <%= f.label :current_password %><br />
     <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
   </div>
 
   <div class="actions buffer-both">
-    <%= f.submit "Изменить", class: "btn btn-dark" %>
-    или <%= link_to "оставить, как есть", edit_user_path(@user) %>
+    <%= f.submit I18n.t('buttons.save'), class: "btn btn-dark" %>
+    или <%= link_to I18n.t('buttons.cancel'), edit_user_path(@user) %>
   </div>
 <% end %>
 
 <div class="alert-warning">
-  <h3>Обратите внимание</h3>
+  <h3><%= I18n.t('titles.user.important') %></h3>
 
-  <p>Здесь вы можете полностью удалить себя из системы</p>
-  <%= button_to "Удалить профиль", registration_path(resource_name),
-                form: { data: { confirm: "Уверены? Изменить это будет нельзя?" } },
+  <p><%= I18n.t('messages.user.profile_delete') %></p>
+  <%= button_to I18n.t('buttons.user.destroy'), registration_path(resource_name),
+                data: { confirm: t('buttons.user.destroy_confirm') },
                 method: :delete,
                 class: "btn btn-outline-danger" %>
 </div>

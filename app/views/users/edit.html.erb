@@ -1,4 +1,4 @@
-<h1 class="display-6">Редактирование профиля</h1>
+<h1 class="display-6"><%= I18n.t('titles.user.edit') %></h1>
 
 <div class="row">
   <div class="col-md-6 buffer-top">
@@ -6,6 +6,6 @@
   </div>
 
   <p class="buffer-top">
-    <%= link_to 'Сменить пароль', edit_user_registration_path, class: "btn btn-outline-warning" %>
+    <%= link_to I18n.t('buttons.user.edit_registration'), edit_user_registration_path, class: "btn btn-outline-warning" %>
   </p>
 </div>

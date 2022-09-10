@@ -5,14 +5,14 @@
                       style: "background-image: url(#{asset_path('event.jpg')})" %>
 
       <div class="event-info-inner row">
-        <div class="col-md-6">
+        <div class="col-md-9">
           <div class="event-description">
             <h1 class="display-1"><%= @event.title %></h1>
             <h3 class="display-6"><%= l(@event.datetime, format: :long) %></h3>
             <h3>
               <small>
                 <%= link_to @event.address, "https://yandex.ru/maps/?text=#{@event.address}",
-                                 title: "Смотреть на Яндекс.Картах",
+                                 title: t('messages.user.yandex_maps'),
                                  class: "fw-light text-warning" %>
               </small>
             </h3>
@@ -21,7 +21,7 @@
 
           <% if current_user_can_edit?(@event) %>
             <div class="buffer-both">
-              <%= link_to 'Изменить', edit_event_path(@event),
+              <%= link_to t('buttons.user.edit'), edit_event_path(@event),
                           class: 'btn btn-light' %>
             </div>
           <% end %>

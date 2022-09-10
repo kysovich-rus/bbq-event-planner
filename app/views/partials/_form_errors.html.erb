@@ -1,15 +1,13 @@
 <% errors = model.errors %>
 
 <% if errors.any? %>
-  <div class="alert alert-danger">
-    <div class="lead buffer-bottom">
-      В вашей форме обнаружено <%= errors.count %> ошибок
-    </div>
-
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= errors.size %> <%= t :error, count: errors.size %>:
     <ul>
-      <% errors.each do |e| %>
-        <li><%= e.full_message %></li>
+      <% errors.each do |error| %>
+        <li><%= error.full_message %></li>
       <% end %>
     </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 <% end %>

@@ -4,7 +4,7 @@
 
   <% if @user == current_user %>
     <p class="mt-4">
-      <%= link_to "Редактировать профиль", edit_user_path(@user),
+      <%= link_to I18n.t('buttons.user.edit'), edit_user_path(@user),
                   class: 'btn btn-outline-dark' %>
     </p>
   <% end %>
@@ -12,12 +12,12 @@
   <div class="row">
     <div class="col-md-12">
       <% if @user.events.any? %>
-        <h3>Организовал:</h3>
+        <h3><%= I18n.t('titles.user.events') %></h3>
         <div class="row">
           <%= render partial: 'events/event', collection: @user.events %>
         </div>
       <% else %>
-        <p class="buffer-top">Пользователь пока не организовал ни одного события</p>
+        <p class="buffer-top"><%= I18n.t('messages.user.no_events') %></p>
       <% end %>
     </div>
   </div>

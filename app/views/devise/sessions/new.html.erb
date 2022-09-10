@@ -1,22 +1,22 @@
-<h2 class="display-4">Вход</h2>
+<h2 class="display-4"><%= I18n.t('titles.user.sign_in') %></h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
   <div class="col-md-9">
     <div class="field">
-      <%= f.label :email, "E-mail" %><br />
+      <%= f.label :email %><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email",
                         class: "form-control" %>
     </div>
 
     <div class="field">
-      <%= f.label :password, "Пароль" %><br />
+      <%= f.label :password %><br />
       <%= f.password_field :password, autocomplete: "current-password",
                            class: "form-control" %>
     </div>
 
     <% if devise_mapping.rememberable? %>
       <div class="field form-check form-switch buffer-top">
-        <%= f.label :remember_me, "Запомни меня" %>
+        <%= f.label :remember_me %>
         <%= f.check_box :remember_me,
                         class: "form-check-input" %>
 
@@ -24,7 +24,7 @@
     <% end %>
 
     <div class="actions buffer-both">
-      <%= f.submit "Log in", class: "btn btn-dark" %>
+      <%= f.submit I18n.t('buttons.user.log_in'), class: "btn btn-dark" %>
     </div>
   </div>
 <% end %>

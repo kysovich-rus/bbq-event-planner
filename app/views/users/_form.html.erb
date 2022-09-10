@@ -1,18 +1,18 @@
-<%= form_for @user, html: {multipart: true} do |f| %>
+<%= form_for @user, html: {multipart: true}, data: {turbo: false} do |f| %>
   <%= render partial: 'partials/form_errors', locals: {model: @user} %>
 
   <div class="form-group">
-    <%= f.label :name, "Вас зовут" %>
+    <%= f.label :name %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :email, "E-mail" %>
+    <%= f.label :email %>
     <%= f.text_field :email, class: 'form-control' %>
   </div>
 
   <div class="actions mt-2">
-    <%= f.submit 'Сохранить', class: 'btn btn-primary' %>
-    или <%= link_to 'оставить, как есть', @user %>
+    <%= f.submit I18n.t('buttons.save'), class: 'btn btn-primary' %>
+    или <%= link_to I18n.t('buttons.cancel'), @user %>
   </div>
 <% end %>
