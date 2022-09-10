@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :ensure_event_author, only: %i[ edit destroy ]
+
   before_action :authenticate_user!, expect: %i[ show index ]
   before_action :set_event, only: [:show]
   before_action :set_current_user_event, only: %i[ edit update destroy ]
@@ -44,10 +44,6 @@ class EventsController < ApplicationController
   end
 
   private
-
-  def ensure_event_author
-    redirect_with_alert unless @event.present?
-  end
 
   def set_event
     @event = Event.find(params[:id])
