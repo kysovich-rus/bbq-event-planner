@@ -19,10 +19,12 @@
             <p class="ms-2"><%= @event.description %></p>
           </div>
 
-          <div class="buffer-both">
-            <%= link_to 'Изменить', edit_event_path(@event),
-                        class: 'btn btn-primary' %>
-          </div>
+          <% if current_user_can_edit?(@event) %>
+            <div class="buffer-both">
+              <%= link_to 'Изменить', edit_event_path(@event),
+                          class: 'btn btn-outline-dark' %>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>

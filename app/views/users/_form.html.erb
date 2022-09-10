@@ -2,17 +2,17 @@
   <%= render partial: 'partials/form_errors', locals: {model: @user} %>
 
   <div class="form-group">
-    <%= f.label :name %>
+    <%= f.label :name, "Вас зовут" %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :email %>
+    <%= f.label :email, "E-mail" %>
     <%= f.text_field :email, class: 'form-control' %>
   </div>
 
   <div class="actions mt-2">
     <%= f.submit 'Сохранить', class: 'btn btn-primary' %>
-    или <%= link_to 'вернуться', :back %>
+    или <%= link_to 'оставить как есть', @user %>
   </div>
 <% end %>

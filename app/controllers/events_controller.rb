@@ -1,5 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_event, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, expect: %i[ show index ]
+  before_action :set_event, only: [:show]
+  before_action :set_current_user_event, only: %i[ edit update destroy ]
 
   def index
     @events = Event.all
@@ -9,19 +12,19 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
+    @event = current_user.events.build
   end
 
   def edit
   end
 
   def create
-    @event = Event.new(event_params)
+    @event = current_user.events.build(event_params)
 
     if @event.save
       redirect_to @event, notice: "Event was successfully created."
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
@@ -29,7 +32,7 @@ class EventsController < ApplicationController
       if @event.update(event_params)
         redirect_to @event, notice: "Event was successfully updated."
       else
-        render :edit, status: :unprocessable_entity
+        render :edit
       end
   end
 
@@ -44,6 +47,10 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find(params[:id])
+  end
+
+  def set_current_user_event
+    @event = current_user.events.find(params[:id])
   end
 
   def event_params
