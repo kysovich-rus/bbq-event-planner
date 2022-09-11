@@ -25,7 +25,8 @@
           <div class="navbar-nav ms-auto">
             <% if user_signed_in? %>
               <%= link_to t('app.navbar.profile'), current_user, class: "nav-link btn" %>
-              <%= button_to t('app.navbar.sign_out'), destroy_user_session_path, method: :delete, class: "nav-link btn" %>
+              <%= button_to t('app.navbar.sign_out'), destroy_user_session_path, method: :delete,
+                            form: { data: { turbo: :false } }, class: "nav-link btn" %>
             <% else %>
               <%= link_to t('app.navbar.sign_in'), new_user_session_path, class: "nav-link btn" %>
               <%= link_to t('app.navbar.sign_up'), new_user_registration_path, class: "nav-link btn" %>
