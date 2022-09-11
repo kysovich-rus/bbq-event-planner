@@ -17,6 +17,13 @@ ru:
         address: 'Место проведения'
         datetime: 'Дата и время'
         description: 'Описание'
+      comment:
+        body: 'Текст комментария'
+        user_name: 'Имя пользователя'
+      subscription:
+        user: 'Пользователь'
+        user_name: 'Имя пользователя'
+        user_email: 'Email пользователя'
 
     controllers:
       comments:
@@ -31,6 +38,7 @@ ru:
         created: 'Вы подписались на это событие'
         destroyed: 'Вы отписались от этого события'
         error: 'Не удалось настроить подписку'
+        error_author_is_subscribed: 'Авторы события и так подписаны!'
       users:
         updated: 'Вы обновили свой профиль'
 

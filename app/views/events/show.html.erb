@@ -52,20 +52,26 @@
       <div class="event-subscriptions">
         <h4>Пойдут:</h4>
         <div>
-          <p>
-            <%= render partial: 'subscriptions/subscription',
-                       collection: @event.subscriptions.except(@new_subscription) %>
-          </p>
+          <% if @event.subscriptions.except(@new_subscription).any? %>
+            <p>
+              <%= render partial: 'subscriptions/subscription',
+                         collection: @event.subscriptions.except(@new_subscription) %>
+            </p>
+          <% else %>
+            <p>Нет подписчиков</p>
+          <% end %>
         </div>
       </div>
-      <div class="event-subscription-form">
-        <h4>Я пойду:</h4>
-        <div>
-          <%= render partial: 'subscriptions/form', locals: {
-                  subscription: @new_subscription || @event.subscriptions.build
-          } %>
+      <% unless @event.user == current_user %>
+        <div class="event-subscription-form">
+          <h4>Я пойду:</h4>
+          <div>
+            <%= render partial: 'subscriptions/form', locals: {
+                    subscription: @new_subscription || @event.subscriptions.build
+            } %>
+          </div>
         </div>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>

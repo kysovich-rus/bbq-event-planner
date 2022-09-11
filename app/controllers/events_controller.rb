@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-  before_action :authenticate_user!, expect: %i[show index]
+  before_action :authenticate_user!, except: %i[show index]
   before_action :set_event, only: %i[show]
   before_action :set_current_user_event, only: %i[edit update destroy]
 
