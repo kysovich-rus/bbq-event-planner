@@ -8,6 +8,7 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <%= stylesheet_link_tag "fontawesome", "data-turbo-track": "reload" %>
   </head>
 
   <body>
@@ -67,8 +68,8 @@
         <% end %>
       </div>
     </div>
-  <footer class="fixed-bottom bg-light">
-    <div class="container pt-2">
+  <footer class="sticky-bottom bg-light">
+    <div class="container pt-2 pb-1">
       <p><%= t('app.author') %> | <%= t('app.course') %></p>
     </div>
   </footer>

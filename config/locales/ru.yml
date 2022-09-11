@@ -19,10 +19,18 @@ ru:
         description: 'Описание'
 
     controllers:
+      comments:
+        destroyed: 'Комментарий удален'
+        created: 'Комментарий добавлен к событию'
+        error: 'Возникла ошибка при выполнении действия над комментарием'
       events:
         created: 'Новое мероприятие успешно записано'
         updated: 'Данные о мероприятии обновлены'
         destroyed: 'Вы удалили мероприятие, праздника не будет?'
+      subscriptions:
+        created: 'Вы подписались на это событие'
+        destroyed: 'Вы отписались от этого события'
+        error: 'Не удалось настроить подписку'
       users:
         updated: 'Вы обновили свой профиль'
 
@@ -49,6 +57,16 @@ ru:
       new: 'Создать новое событие'
       edit: 'Изменить данные события'
       destroy: 'Удалить событие'
+      subscription:
+        create: 'Подписаться'
+
+  comments:
+    comment:
+      destroy_confirm: 'Вы уверены, что хотите удалить этот комментарий?'
+
+  subscriptions:
+    subscription:
+      destroy_confirm: 'Вы уверены, что хотите удалить эту подписку?'
 
   titles:
     user:
