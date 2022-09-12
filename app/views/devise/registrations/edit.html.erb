@@ -35,7 +35,7 @@
 
   <p><%= I18n.t('messages.user.profile_delete') %></p>
   <%= button_to I18n.t('buttons.user.destroy'), registration_path(resource_name),
-                data: { confirm: t('buttons.user.destroy_confirm') },
+                form: { data: { turbo_confirm: t('buttons.destroy_confirm') } },
                 method: :delete,
                 class: "btn btn-outline-danger" %>
 </div>
