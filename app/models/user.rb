@@ -14,6 +14,14 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255}
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
+  validates :password, length: {minimum: 6}
+  validate  :password_confirmed?
+
+  def password_confirmed?
+    unless password.present? && password == password_confirmation
+      errors.add(:user, I18n.t('activerecord.controllers.users.error_password_doesnt_match'))
+    end
+  end
 
   private
 

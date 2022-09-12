@@ -16,9 +16,7 @@
 
      <div class="field">
        <%= f.label :password %>
-       <% if @minimum_password_length %>
-         <em>(Минимальная длина - <%= @minimum_password_length %>)</em>
-       <% end %>
+       <em id="passwordHelpBlock", class="form-text">(Минимальная длина - 6 символов)</em>
        <%= f.password_field :password, autocomplete: "new-password",
                             class: "form-control" %>
      </div>

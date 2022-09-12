@@ -41,6 +41,7 @@ ru:
         error_author_is_subscribed: 'Авторы события и так подписаны!'
       users:
         updated: 'Вы обновили свой профиль'
+        error_password_doesnt_match: 'Пароли не совпадают'
 
   app:
     name: 'Шашлычки'

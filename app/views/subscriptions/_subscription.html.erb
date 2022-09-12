@@ -7,7 +7,7 @@
     <% end %>
     <% if current_user_can_edit?(subscription) %>
       <%= button_to(
-                  bi_icon('x-square-filled'),
+                  bi_icon('x-square-fill'),
                   event_subscription_path(subscription.event, subscription),
                   method: :delete,
                   form: { data: { turbo_confirm: t('.destroy_confirm')} },
