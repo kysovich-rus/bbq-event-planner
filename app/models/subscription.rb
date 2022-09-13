@@ -16,12 +16,6 @@ class Subscription < ApplicationRecord
 
   validate :event_authors_subscription
 
-  def event_authors_subscription
-    if event.user == user
-      errors.add(:user, t('activerecord.controllers.subscriptions.error_author_is_subscribed'))
-    end
-  end
-
   def user_name
     if user.present?
       user.name
@@ -35,6 +29,14 @@ class Subscription < ApplicationRecord
       user.email
     else
       super
+    end
+  end
+
+  private
+
+  def event_authors_subscription
+    if event.user == user
+      errors.add(:user, t('activerecord.controllers.subscriptions.error_author_is_subscribed'))
     end
   end
 
