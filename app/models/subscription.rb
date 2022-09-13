@@ -15,6 +15,7 @@ class Subscription < ApplicationRecord
   validates :user_email, uniqueness: {scope: :event_id}, unless: -> { user.present? }
 
   validate :event_authors_subscription
+  validate :email_of_existing_user?
 
   def user_name
     if user.present?
@@ -34,13 +35,21 @@ class Subscription < ApplicationRecord
 
   private
 
+  def downcase_user_email
+    user_email&.downcase!
+  end
+
   def event_authors_subscription
     if event.user == user
       errors.add(:user, t('activerecord.controllers.subscriptions.error_author_is_subscribed'))
     end
   end
 
-  def downcase_user_email
-    user_email&.downcase!
+  def email_of_existing_user?
+    if User.find_by(email:   user_email).present?
+      errors.add(:user_email, I18n.t('activerecord.controllers.subscriptions.error_email_is_used'))
+    end
   end
+
+
 end

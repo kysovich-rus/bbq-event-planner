@@ -23,7 +23,7 @@ ru:
       subscription:
         user: 'Пользователь'
         user_name: 'Имя пользователя'
-        user_email: 'Email пользователя'
+        user_email: 'E-mail пользователя'
 
     controllers:
       comments:
@@ -39,6 +39,7 @@ ru:
         destroyed: 'Вы отписались от этого события'
         error: 'Не удалось настроить подписку'
         error_author_is_subscribed: 'Авторы события и так подписаны!'
+        error_email_is_used: 'уже используется!'
       users:
         updated: 'Вы обновили свой профиль'
         error_password_doesnt_match: 'Пароли не совпадают'

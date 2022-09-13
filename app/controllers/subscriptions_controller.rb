@@ -32,19 +32,6 @@ class SubscriptionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /subscriptions/1 or /subscriptions/1.json
-  def update
-    respond_to do |format|
-      if @subscription.update(subscription_params)
-        format.html { redirect_to subscription_url(@subscription), notice: "Subscription was successfully updated." }
-        format.json { render :show, status: :ok, location: @subscription }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @subscription.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /subscriptions/1 or /subscriptions/1.json
   def destroy
     message = {notice: t('activerecord.controllers.subscriptions.destroyed')}
