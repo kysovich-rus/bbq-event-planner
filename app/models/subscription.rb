@@ -41,13 +41,13 @@ class Subscription < ApplicationRecord
 
   def event_authors_subscription
     if event.user == user
-      errors.add(:user, t('activerecord.controllers.subscriptions.error_author_is_subscribed'))
+      errors.add(:user, t('activerecord.errors.models.subscription.author_is_subscribed'))
     end
   end
 
   def email_of_existing_user
     if User.find_by(email: user_email).present?
-      errors.add(:user_email, I18n.t('activerecord.controllers.subscriptions.email_already_taken'))
+      errors.add(:user_email, I18n.t('activerecord.errors.models.subscription.email_already_taken'))
     end
   end
 end

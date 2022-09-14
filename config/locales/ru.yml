@@ -35,11 +35,16 @@ ru:
         created: 'Вы подписались на это событие'
         destroyed: 'Вы отписались от этого события'
         error: 'Не удалось настроить подписку'
-        error_author_is_subscribed: 'Авторы события и так подписаны!'
-        email_already_taken: 'Такой E-mail уже используется'
       users:
         updated: 'Вы обновили свой профиль'
-        error_password_doesnt_match: 'Пароли не совпадают'
+    errors:
+      models:
+        subscription:
+          email_already_taken: 'Такой E-mail уже используется'
+          author_is_subscribed: 'Авторы события и так подписаны!'
+        user:
+          passwords_dont_match: 'Пароли не совпадают'
+
   app:
     name: 'Шашлычки'
     author: 'Алексей Г.'
@@ -49,6 +54,7 @@ ru:
       sign_out: 'Выйти'
       sign_up: 'Зарегистрироваться'
       profile: 'Мой профиль'
+
   buttons:
     save: 'Сохранить'
     send: 'Отправить'
@@ -65,12 +71,15 @@ ru:
       destroy: 'Удалить событие'
       subscription:
         create: 'Подписаться'
+
   comments:
     comment:
       destroy_confirm: 'Вы уверены, что хотите удалить этот комментарий?'
+
   subscriptions:
     subscription:
       destroy_confirm: 'Вы уверены, что хотите удалить эту подписку?'
+
   titles:
     user:
       new_registration: 'Регистрация пользователя'

@@ -19,7 +19,7 @@ class User < ApplicationRecord
 
   def password_confirmed?
     unless password.present? && password == password_confirmation
-      errors.add(:user, I18n.t('activerecord.controllers.users.error_password_doesnt_match'))
+      errors.add(:user, I18n.t('activerecord.errors.models.user.passwords_dont_match'))
     end
   end
 
