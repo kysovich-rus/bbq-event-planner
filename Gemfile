@@ -36,6 +36,12 @@ gem "i18n"
 gem "rails-i18n"
 gem "devise-i18n"
 
+gem "carrierwave"
+gem "rmagick"
+
+gem "fog-aws"
+gem "image_processing"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
@@ -48,4 +54,3 @@ end
 group :development do
   gem "web-console"
 end
-

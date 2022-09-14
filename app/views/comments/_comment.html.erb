@@ -8,7 +8,7 @@
             <%= render partial: 'users/user', object: comment.user %>
           <% else %>
             <span class="user-avatar">
-              <%= image_tag(user_avatar(nil), class: "img-icon") %>
+              <%= image_tag(asset_path('user.png'), class: "img-icon") %>
             </span>
             <span class="fw-bold"><%= comment.user_name %></span>
           <% end %>

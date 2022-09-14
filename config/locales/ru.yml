@@ -4,10 +4,12 @@ ru:
       user: 'Пользователь'
       event: 'Событие'
       subscription: 'Подписка'
+      photo: 'Фотография'
     attributes:
       user:
         email: 'E-mail'
         name: 'Имя'
+        avatar: 'Аватар'
         password: 'Пароль'
         password_confirmation: 'Подтверждение пароля'
       event:
@@ -22,6 +24,8 @@ ru:
         user: 'Пользователь'
         user_name: 'Имя пользователя'
         user_email: 'E-mail пользователя'
+      photo:
+        photo: 'Фотография'
     controllers:
       comments:
         destroyed: 'Комментарий удален'
@@ -37,6 +41,10 @@ ru:
         error: 'Не удалось настроить подписку'
       users:
         updated: 'Вы обновили свой профиль'
+      photos:
+        created: 'Вы прикрепили фотографию к событию'
+        destroyed: 'Вы удалили фотографию'
+        error: 'При взаимодействии с фотографией возникла ошибка'
     errors:
       models:
         subscription:
