@@ -1,7 +1,8 @@
 <span class="user">
   <span class="user-avatar">
-    <%= image_tag(user_avatar(user), class: "img-icon") %>
+    <a href="<%= user_path(user) %>"> <%= image_tag(user_avatar(user), class: "img-icon") %> </a>
   </span>
+
   <span class="user-name">
     <% if request.path == user_path(user) %>
       <%= user.name %>

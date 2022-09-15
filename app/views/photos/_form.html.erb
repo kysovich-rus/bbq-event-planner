@@ -1,9 +1,9 @@
 <%= form_for [@event, photo], html: { multipart: true }, data: { turbo: false } do |f| %>
-  <%= render partial: 'partials/form_errors', locals: {model: photo} %>
+  <%= render partial: 'partials/form_errors', locals: { model: photo } %>
 
-  <div class="form-group buffer-both">
+  <div class="form-group">
     <p><%= f.label :photo %></p>
-    <p><%= f.file_field :photo %></p>
+    <p><%= f.file_field :photo, class: 'form-control' %></p>
   </div>
 
   <div class="actions">

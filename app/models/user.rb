@@ -9,13 +9,15 @@ class User < ApplicationRecord
   has_many :events
   has_many :comments, dependent: :destroy
   has_many :subscriptions
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_fill: [70, 70]
+    attachable.variant :default, resize_to_fill: [200, 200]
+  end
 
   validates :name, presence: true, length: {maximum: 35}
   validates :email, presence: true, length: {maximum: 255}
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
-
-  mount_uploader :avatar, AvatarUploader
 
   private
 

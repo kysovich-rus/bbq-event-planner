@@ -36,11 +36,10 @@ gem "i18n"
 gem "rails-i18n"
 gem "devise-i18n"
 
+gem "aws-sdk-s3", require: false
+gem "image_processing", "~> 1.0"
 gem "carrierwave"
-gem "rmagick"
-
-gem "fog-aws"
-gem "image_processing"
+gem "ruby-vips"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]

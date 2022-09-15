@@ -1,5 +1,18 @@
-<div class="event-photo buffer-both">
-  <%= link_to image_tag(photo.photo.thumb.url), photo.photo.url %>
+<div class="event-photo">
 
-  Добавил <%= render partial: 'users/user', object: photo.user %>
+  <span class="border-1">
+    <%= link_to image_tag(photo.photo.variant(:thumb)), url_for(photo.photo), class: 'btn' %>
+  </span>
+
+  <%= I18n.t('photos.photo.added') %>
+  <%= render partial: 'users/user', object: photo.user %>
+
+  <% if current_user_can_edit?(photo) %>
+    <%= button_to(bi_icon("trash-fill"),
+                  event_photo_path(photo.event, photo),
+                  method: :delete,
+                  form: { data: {turbo_confirm: t('photos.photo.destroy_confirm') } },
+                  class: 'btn btn-danger p-1',
+                  form_class: 'd-inline') %>
+  <% end %>
 </div>
