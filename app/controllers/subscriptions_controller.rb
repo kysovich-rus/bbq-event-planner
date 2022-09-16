@@ -26,6 +26,7 @@ class SubscriptionsController < ApplicationController
     @new_subscription.user = current_user
 
     if @new_subscription.save
+      EventMailer.subscription(@new_subscription).deliver_now
       redirect_to @event, notice: t('activerecord.controllers.subscriptions.created')
     else
       render 'events/show', alert: t('activerecord.controllers.subscriptions.error')

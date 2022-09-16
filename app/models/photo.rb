@@ -8,6 +8,4 @@ class Photo < ApplicationRecord
   end
 
   scope :persisted, -> { where "id IS NOT NULL" }
-
-  validates :user, presence: true
 end

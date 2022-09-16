@@ -96,6 +96,7 @@ ru:
     user:
       new_registration: 'Регистрация пользователя'
       edit_registration: 'Смена пароля'
+      edit_password: 'Меняем ваш забытый пароль...'
       edit: 'Редактирование пользователя'
       events: 'Организованные события'
       important: 'Важное'
@@ -118,3 +119,19 @@ ru:
     few: 'ошибки'
     many: 'ошибок'
     other: 'ошибки'
+
+  event_mailer:
+    comment:
+      title: 'Новый комментарий'
+      author: 'Автор'
+      event: 'Событие'
+      datetime: 'Состоится'
+      owner: 'Организатор'
+    subscription:
+      title: 'Новая подписка'
+      name: 'Имя'
+      email: 'E-mail'
+      author: 'Автор'
+      event: 'Событие'
+      datetime: 'Состоится'
+      owner: 'Организатор'

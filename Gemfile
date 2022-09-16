@@ -38,7 +38,6 @@ gem "devise-i18n"
 
 gem "aws-sdk-s3", require: false
 gem "image_processing", "~> 1.0"
-gem "carrierwave"
 gem "ruby-vips"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
