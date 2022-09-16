@@ -7,5 +7,7 @@ class Photo < ApplicationRecord
     attachable.variant :medium, resize_to_fit: [300, 300]
   end
 
+  validates :photo, presence: true
+
   scope :persisted, -> { where "id IS NOT NULL" }
 end
