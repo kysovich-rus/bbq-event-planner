@@ -33,15 +33,6 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /comments/1 or /comments/1.json``
-  def update
-      if @comment.update(comment_params)
-        redirect_to comment_url(@comment), notice: "Comment was successfully updated."
-      else
-        render :edit
-      end
-  end
-
   # DELETE /comments/1 or /comments/1.json
   def destroy
     message = { notice: t('activerecord.controllers.comments.destroyed') }
