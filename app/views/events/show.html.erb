@@ -36,20 +36,32 @@
   </div>
   <div class="row">
     <div class="col-md-8">
-      <div class="event-photo-form mb-2">
-        <%= render partial: 'photos/form', locals: {photo: @new_photo || @event.photos.build} %>
-      </div>
+      <h3 class="display-6"><%= t('titles.event.photos') %></h3>
+      <% if current_user_can_edit?(@event) %>
+        <div class="event-photo-form mb-2">
+          <%= render partial: 'photos/form', locals: {photo: @new_photo || @event.photos.build} %>
+        </div>
+      <% end %>
 
       <div class="event-photos">
         <div class="event-photos-gallery">
-          <%= render partial: 'photos/photo', collection: @event.photos.except(@new_photo) %>
+          <% if @event.photos.except(@new_photo).any? %>
+            <%= render partial: 'photos/photo', collection: @event.photos.except(@new_photo) %>
+          <% else %>
+            <p><%= t('messages.event.no_photos') %></p>
+          <% end %>
         </div>
       </div>
 
+      <h3 class="display-6"><%= t('titles.event.comments') %></h3>
       <div class="event-comments buffer-top">
         <div class="buffer-both">
-          <%= render partial: 'comments/comment',
-                     collection: @event.comments.except(@new_comment) %>
+          <% if @event.comments.except(@new_comment).any? %>
+            <%= render partial: 'comments/comment',
+                      collection: @event.comments.except(@new_comment) %>
+          <% else %>
+            <p><%= t('messages.event.no_comments') %></p>
+          <% end %>
           <%= render partial: 'comments/form',
                      locals: {comment: @new_comment || @event.comments.build} %>
         </div>
