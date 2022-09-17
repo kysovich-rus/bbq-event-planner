@@ -10,7 +10,8 @@ class PhotosController < ApplicationController
       notify_subscribers(@event, @new_photo)
       redirect_to @event, notice: I18n.t('activerecord.controllers.photos.created')
     else
-      render 'events/show', alert: I18n.t('activerecord.controllers.photos.error')
+      flash.now[:alert] = t('activerecord.controllers.photos.error')
+      render 'events/show'
     end
   end
 

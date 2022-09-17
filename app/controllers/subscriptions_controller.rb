@@ -29,7 +29,8 @@ class SubscriptionsController < ApplicationController
       EventMailer.subscription(@new_subscription).deliver_now
       redirect_to @event, notice: t('activerecord.controllers.subscriptions.created')
     else
-      render 'events/show', alert: t('activerecord.controllers.subscriptions.error')
+      flash.now[:alert] = t('activerecord.controllers.subscriptions.error')
+      render 'events/show'
     end
   end
 

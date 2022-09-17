@@ -5,9 +5,8 @@ class Subscription < ApplicationRecord
   before_validation :downcase_user_email
 
   validates :user_name, presence: true, unless: -> { user.present? }
-  validates :user_email, presence: true,
-            format: { with: /\A[\w\-.]+@[\w\-.]+\z/},
-            unless: -> { user.present? }
+  validates :user_email, presence: true, unless: -> { user.present? }
+  validates :user_email, format: { with: /\A[\w\-.]+@[\w\-.]+\z/}, if: -> { user_email.present? }
 
   validates :user, uniqueness: {scope: :event_id}, if: -> { user.present? }
   validates :user_email, uniqueness: {scope: :event_id}, unless: -> { user.present? }

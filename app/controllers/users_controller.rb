@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       redirect_to @user, notice: t('activerecord.controllers.users.updated')
     else
+      flash.now[:alert] = t('activerecord.controllers.users.error')
       render :edit
     end
   end
