@@ -84,6 +84,8 @@ ru:
       destroy: 'Удалить событие'
       subscription:
         create: 'Подписаться'
+    photo:
+      destroy: 'Удалить фотографию'
 
   comments:
     comment:
@@ -91,7 +93,6 @@ ru:
 
   photos:
     photo:
-      added: 'Добавил'
       destroy_confirm: 'Вы уверены, что хотите удалить эту фотографию?'
   subscriptions:
     subscription:
@@ -112,7 +113,7 @@ ru:
       index: 'События'
       new: 'Создание нового события'
       edit: 'Редактирование события'
-      photos: 'Прикрепленные фотографии'
+      photos: 'Прикрепленные фотографии (%{count})'
       comments: 'Комментарии (%{count})'
       subscribers: 'Подписались'
       subscribe_form: 'Я пойду!'
@@ -130,6 +131,8 @@ ru:
       no_photos: 'Нет прикрепленных фотографий'
       no_comments: 'Никто еще не комментировал данное событие'
       no_subscribers: 'Никто не идет на вечеринку...'
+    photo:
+      added_by: 'Добавил(а): '
 
   error:
     one: 'ошибка'

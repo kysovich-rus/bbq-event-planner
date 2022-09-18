@@ -8,7 +8,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
@@ -54,23 +53,7 @@
         </div>
       <% end %>
 
-      <div class="row">
-        <div class="col-lg-10">
-
-          <%= yield %>
-        </div>
-        <% if user_signed_in? %>
-          <div class="col-lg-2">
-            <div class="nav flex-column mt-4">
-              <ul class="list-group">
-                <li class="list-group-item"><%= link_to "Link1", "#", class: "nav-link text-reset py-1" %></li>
-                <li class="list-group-item"><%= link_to "Link2", "#", class: "nav-link text-reset py-1" %></li>
-                <li class="list-group-item"><%= link_to "Link3", "#", class: "nav-link text-reset py-1" %></li>
-              </ul>
-            </div>
-          </div>
-        <% end %>
-      </div>
+      <%= yield %>
     </div>
   <footer class="sticky-bottom bg-light">
     <div class="container pt-2 pb-1 mt-4">

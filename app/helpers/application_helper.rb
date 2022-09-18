@@ -3,7 +3,7 @@ module ApplicationHelper
     content_tag 'span', '', class: "bi bi-#{icon_class}"
   end
 
-  def event_photo(event)
+  def event_lg_thumb(event)
     photos = event.photos.persisted
 
     if photos.any?

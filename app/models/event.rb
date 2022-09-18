@@ -13,6 +13,10 @@ class Event < ApplicationRecord
     (comments.except(@new_comment)).count
   end
 
+  def photo_count
+    (photos.except(@new_photo)).count
+  end
+
   def sub_count
     (subscriptions.except(@new_subscription) + [user]).uniq.count
   end

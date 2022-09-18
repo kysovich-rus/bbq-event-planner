@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <%= content_tag 'div', '',
                       class: 'event-background',
-                      style: "background-image: url(#{event_photo(@event)})" %>
+                      style: "background-image: url(#{event_lg_thumb(@event)})" %>
 
       <div class="event-info-inner row">
         <div class="col-md-8">
@@ -45,17 +45,22 @@
   </div>
   <div class="row">
     <div class="col-md-8">
-      <h3 class="display-6"><%= t('titles.event.photos') %></h3>
-      <% if current_user_can_edit?(@event) %>
-        <div class="event-photo-form mb-2">
-          <%= render partial: 'photos/form', locals: {photo: @new_photo || @event.photos.build} %>
-        </div>
-      <% end %>
-
+      <h3 class="display-6"><%= t('titles.event.photos', count: @event.photo_count) %></h3>
       <div class="event-photos">
+        <% if user_can_add_photo?(@event) %>
+          <div class="event-photo-form mb-2">
+            <%= render partial: 'photos/form', locals: { photo: @new_photo || @event.photos.build} %>
+          </div>
+        <% end %>
         <div class="event-photos-gallery">
           <% if @event.photos.except(@new_photo).any? %>
-            <%= render partial: 'photos/photo', collection: @event.photos.except(@new_photo) %>
+            <div class="d-flex flex-wrap mb-2" data-lightbox="set">
+              <% @event.photos.persisted.each do |photo| %>
+                <div class="mt-2 mb-1 mx-2">
+                  <%= render partial: 'photos/photo', object: photo %>
+                </div>
+              <% end %>
+            </div>
           <% else %>
             <p><%= t('messages.event.no_photos') %></p>
           <% end %>
@@ -110,3 +115,4 @@
 </div>
 
 <%= javascript_include_tag "map" %>
+<%= javascript_include_tag "lightbox" %>

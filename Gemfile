@@ -27,6 +27,7 @@ gem "hotwire-rails"
 
 # Bundle and process CSS [https://github.com/rails/cssbundling-rails]
 gem "cssbundling-rails"
+gem "sass-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
@@ -45,6 +46,8 @@ gem "mailjet"
 gem "dotenv-rails"
 
 gem "jquery-rails"
+
+# gem "lightbox2-rails"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
