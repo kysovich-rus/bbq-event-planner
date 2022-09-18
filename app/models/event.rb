@@ -9,6 +9,10 @@ class Event < ApplicationRecord
   validates :address, presence: true
   validates :datetime, presence: true
 
+  def sub_count
+    (subscriptions.except(@new_subscription) + [user]).uniq.count
+  end
+
   def visitors
     (subscribers + [user]).uniq
   end

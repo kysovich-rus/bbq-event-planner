@@ -6,7 +6,7 @@
                       style: "background-image: url(#{event_photo(@event)})" %>
 
       <div class="event-info-inner row">
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="event-description">
             <h1 class="display-1"><%= @event.title %></h1>
             <h3 class="display-6"><%= l(@event.datetime, format: :long) %></h3>
@@ -19,17 +19,26 @@
             </h3>
             <p class="ms-2"><%= @event.description %></p>
           </div>
-
           <% if current_user_can_edit?(@event) %>
-            <div class="buffer-both">
+            <div class="d-inline-flex buffer-both">
               <%= link_to t('buttons.event.edit'), edit_event_path(@event),
-                            class: 'btn btn-light mb-2' %>
+                            class: 'btn btn-light me-2' %>
               <%= button_to t('buttons.event.destroy'), event_path(@event),
                           method: :delete,
                           form: { data: { turbo_confirm: t('buttons.destroy_confirm') } },
                           class: "btn btn-outline-danger" %>
             </div>
           <% end %>
+        </div>
+        <div class="col-md-4">
+          <div class="event-owner m-4">
+            <span class="fw-semibold"><%= t('titles.event.author') %></span>
+            <div class="bg-light rounded p-1"><%= render partial: 'users/user', object: @event.user %></div>
+          </div>
+          <div class="event-visitors m-4">
+            <span class="fw-semibold"><%= t('titles.event.visitors_count') %></span>
+            <p class="display-6"><%= @event.sub_count %></p>
+          </div>
         </div>
       </div>
     </div>
@@ -68,26 +77,9 @@
       </div>
     </div>
     <div class="col-md-4">
-      <div class="event-owner">
-        <h4>Зовет:</h4>
-        <p><%= render partial: 'users/user', object: @event.user %></p>
-      </div>
-      <div class="event-subscriptions">
-        <h4>Пойдут:</h4>
-        <div>
-          <% if @event.subscriptions.except(@new_subscription).any? %>
-            <p>
-              <%= render partial: 'subscriptions/subscription',
-                         collection: @event.subscriptions.except(@new_subscription) %>
-            </p>
-          <% else %>
-            <p>Нет подписчиков</p>
-          <% end %>
-        </div>
-      </div>
       <% unless @event.user == current_user %>
-        <div class="event-subscription-form">
-          <h4>Я пойду:</h4>
+        <div class="event-subscription-form mb-2">
+          <h4><%= t('titles.event.subscribe_form') %></h4>
           <div>
             <%= render partial: 'subscriptions/form', locals: {
                     subscription: @new_subscription || @event.subscriptions.build
@@ -95,6 +87,26 @@
           </div>
         </div>
       <% end %>
+      <div>
+        <h4><%= I18n.t('titles.event.address') %></h4>
+        <div id='map' data-address='<%= @event.address %>' class='event-map'></div>
+      </div>
+
+      <div class="event-subscriptions">
+        <h4><%= t('titles.event.subscribers') %></h4>
+        <div>
+          <% if @event.subscriptions.except(@new_subscription).any? %>
+            <p>
+              <%= render partial: 'subscriptions/subscription',
+                         collection: @event.subscriptions.except(@new_subscription) %>
+            </p>
+          <% else %>
+            <p><%= t('messages.event.no_subscribers') %></p>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<%= javascript_tag 'map' %>

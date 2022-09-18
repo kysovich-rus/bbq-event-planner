@@ -114,6 +114,11 @@ ru:
       edit: 'Редактирование события'
       photos: 'Прикрепленные фотографии'
       comments: 'Комментарии'
+      subscribers: 'Подписались'
+      subscribe_form: 'Я пойду!'
+      visitors_count: 'Участников:'
+      address: 'Куда подходить'
+      author: 'Организатор:'
       pincode_only: 'Доступ по пин-коду'
 
   messages:
@@ -124,6 +129,7 @@ ru:
     event:
       no_photos: 'Нет прикрепленных фотографий'
       no_comments: 'Никто еще не комментировал данное событие'
+      no_subscribers: 'Никто не идет на вечеринку...'
 
   error:
     one: 'ошибка'
