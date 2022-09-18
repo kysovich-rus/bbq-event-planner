@@ -62,7 +62,7 @@
         </div>
       </div>
 
-      <h3 class="display-6"><%= t('titles.event.comments') %></h3>
+      <h3 class="display-6"><%= t('titles.event.comments', count: @event.comment_count) %></h3>
       <div class="event-comments buffer-top">
         <div class="buffer-both">
           <% if @event.comments.except(@new_comment).any? %>
