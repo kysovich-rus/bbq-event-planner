@@ -3,13 +3,14 @@
   <head>
     <title><%= t('app.name') %>></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <script src='https://api-maps.yandex.ru/2.1/?apikey=<%= Rails.application.credentials.dig(:ymap, :api_key)%>&lang=ru_RU'></script>
+    <meta name="turbo-visit-control" content="reload">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+    <script src='https://api-maps.yandex.ru/2.1/?apikey=<%= Rails.application.credentials.dig(:ymap, :api_key)%>&lang=ru_RU'></script>
 
   </head>
 

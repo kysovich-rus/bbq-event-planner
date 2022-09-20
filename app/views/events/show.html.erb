@@ -94,7 +94,7 @@
       <% end %>
       <div>
         <h4><%= I18n.t('titles.event.address') %></h4>
-        <div id='map' data-address='<%= @event.address %>' data-controller='map' class='event-map'></div>
+        <div id='map' data-address='<%= @event.address %>' class='event-map'></div>
       </div>
 
       <div class="event-subscriptions">
@@ -113,6 +113,3 @@
     </div>
   </div>
 </div>
-
-<%= javascript_include_tag "map", defer: true %>
-<%= javascript_include_tag "lightbox", defer: true %>
