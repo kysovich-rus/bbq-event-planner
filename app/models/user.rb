@@ -1,11 +1,11 @@
 class User < ApplicationRecord
   before_validation :set_name, on: :create
   after_commit :link_subscriptions, on: :create
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable
+
   has_many :events
   has_many :comments, dependent: :destroy
   has_many :subscriptions

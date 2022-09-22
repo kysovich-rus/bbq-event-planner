@@ -7,17 +7,9 @@ class SubscriptionsController < ApplicationController
     @subscriptions = Subscription.all
   end
 
-  # GET /subscriptions/1 or /subscriptions/1.json
-  def show
-  end
-
   # GET /subscriptions/new
   def new
     @subscription = Subscription.new
-  end
-
-  # GET /subscriptions/1/edit
-  def edit
   end
 
   # POST /subscriptions or /subscriptions.json
@@ -42,7 +34,6 @@ class SubscriptionsController < ApplicationController
     else
       message = {alert: t('activerecord.controllers.subscriptions.error')}
     end
-
     redirect_to @event, message
   end
 
