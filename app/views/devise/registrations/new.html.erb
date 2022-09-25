@@ -1,6 +1,6 @@
 <h2 class="display-4"><%= I18n.t('titles.user.new_registration') %></h2>
 <div class="col-md-9">
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: false }) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), data: {turbo: false}) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
      <div class="field">
@@ -26,6 +26,8 @@
        <%= f.password_field :password_confirmation, autocomplete: "new-password",
                             class: "form-control" %>
      </div>
+
+    <%= recaptcha_tags class: "mt-2" %>
 
      <div class="actions buffer-both">
        <%= f.submit I18n.t('buttons.save'), class: "btn btn-dark" %>

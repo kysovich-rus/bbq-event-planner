@@ -40,6 +40,8 @@ gem "i18n"
 gem "rails-i18n"
 gem "devise-i18n"
 
+gem "recaptcha"
+
 gem "aws-sdk-s3", require: false
 gem "image_processing", "~> 1.0"
 gem "ruby-vips"

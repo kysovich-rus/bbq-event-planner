@@ -1,4 +1,4 @@
-<%= form_for [@event, comment] do |f| %>
+<%= form_for [@event, comment], data: {turbo: false} do |f| %>
   <%= render partial: 'partials/form_errors', locals: {model: comment} %>
 
   <div class="form-group">
@@ -11,6 +11,8 @@
       <%= f.label :user_name %>
       <%= f.text_field :user_name, class: 'form-control' %>
     </div>
+
+    <%= recaptcha_tags class: "mt-2" %>
   <% end %>
 
   <div class="actions mt-2">

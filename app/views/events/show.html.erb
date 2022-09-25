@@ -70,14 +70,15 @@
       <h3 class="display-6"><%= t('titles.event.comments', count: @event.comment_count) %></h3>
       <div class="event-comments buffer-top">
         <div class="buffer-both">
+          <%= render partial: 'comments/form',
+                     locals: {comment: @new_comment || @event.comments.build} %>
+
           <% if @event.comments.except(@new_comment).any? %>
             <%= render partial: 'comments/comment',
                       collection: @event.comments.except(@new_comment) %>
           <% else %>
             <p><%= t('messages.event.no_comments') %></p>
           <% end %>
-          <%= render partial: 'comments/form',
-                     locals: {comment: @new_comment || @event.comments.build} %>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <div class="text-center buffer-top">
   <%= image_tag user_avatar(@user), class: "rounded-circle img-thumbnail" %>
   <h1 class="display-5"><%= @user.name %></h1>
-
+  <p class="display-6 text-sm"><%= @user.email %></p>
   <% if @user == current_user %>
     <p class="mt-4">
       <%= link_to I18n.t('buttons.user.edit'), edit_user_path(@user),
