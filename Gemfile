@@ -53,7 +53,7 @@ gem "bcrypt_pbkdf"
 
 gem "jquery-rails"
 
-# gem "lightbox2-rails"
+gem "pundit", "~> 1.1"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -67,6 +67,9 @@ group :development, :test do
   gem 'capistrano-passenger', '~> 0.2'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'
+
+  gem "rspec-rails"
+  gem "factory_bot_rails"
 end
 
 group :development do

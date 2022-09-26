@@ -1,9 +1,11 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_user_can_edit?
-
-  private
 
   def current_user_can_edit?(model)
     user_signed_in? && (
@@ -12,6 +14,12 @@ class ApplicationController < ActionController::Base
     )
   end
 
+  def pundit_user
+    UserContext.new(current_user, cookies, params[:pincode])
+  end
+
+  private
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
       :account_update,
@@ -19,7 +27,8 @@ class ApplicationController < ActionController::Base
     )
   end
 
-  def redirect_with_alert
-    redirect_to root_path, alert: 'Доступ запрещен!'
+  def user_not_authorized
+    flash[:alert] = t('pundit.not_authorized')
+    redirect_to(request.referrer || root_path)
   end
 end
