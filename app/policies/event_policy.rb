@@ -1,13 +1,14 @@
 class EventPolicy < ApplicationPolicy
   def show?
-    return true if @record.pincode.blank? || update?
+    pincode_guard
+  end
 
-    if @user.pincode.present? && @record.pincode_valid?(@user.pincode)
-      @user.cookies["events_#{@record.id}_pincode"] = @user.pincode
-    end
+  def create?
+    user.present?
+  end
 
-    pincode = @user.cookies["events_#{@record.id}_pincode"]
-    @record.pincode_valid?(pincode)
+  def new?
+    create?
   end
 
   def edit?
@@ -15,10 +16,24 @@ class EventPolicy < ApplicationPolicy
   end
 
   def update?
-    @record.user == @user.user
+    @record.user == user
   end
 
   def destroy?
     update?
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.all
+    end
+  end
+
+  private
+
+  def pincode_guard
+    return true if @record.pincode.blank? || user == @record.user
+
+    @record.pincode_valid?(cookies["events_#{@record.id}_pincode"])
   end
 end

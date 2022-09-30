@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
-  include Pundit
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  include Pundit::Authorization
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_user_can_edit?
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   def current_user_can_edit?(model)
     user_signed_in? && (
@@ -15,10 +15,8 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_user
-    UserContext.new(current_user, cookies, params[:pincode])
+    UserContext.new(current_user, cookies)
   end
-
-  private
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(
@@ -26,6 +24,8 @@ class ApplicationController < ActionController::Base
       keys: %i[password password_confirmation current_password]
     )
   end
+
+  private
 
   def user_not_authorized
     flash[:alert] = t('pundit.not_authorized')

@@ -53,7 +53,7 @@ gem "bcrypt_pbkdf"
 
 gem "jquery-rails"
 
-gem "pundit", "~> 1.1"
+gem "pundit", "~>2.2"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
@@ -70,6 +70,9 @@ group :development, :test do
 
   gem "rspec-rails"
   gem "factory_bot_rails"
+  gem "rspec"
+  gem "rspec-core"
+  gem "pundit-matchers"
 end
 
 group :development do

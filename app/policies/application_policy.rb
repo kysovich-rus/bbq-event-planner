@@ -1,8 +1,10 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :user, :record, :context, :cookies
+  delegate :user, to: :context
+  delegate :cookies, to: :context
 
-  def initialize(user, record)
-    @user = user
+  def initialize(context, record)
+    @context = context
     @record = record
   end
 
@@ -11,7 +13,7 @@ class ApplicationPolicy
   end
 
   def show?
-    scope.where(:id => record.id).exists?
+    false
   end
 
   def create?

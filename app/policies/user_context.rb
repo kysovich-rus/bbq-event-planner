@@ -1,9 +1,8 @@
 class UserContext
-  attr_reader :user, :cookies, :pincode
+  attr_reader :user, :cookies
 
-  def initialize(user, cookies, pincode)
+  def initialize(user, cookies)
     @user = user
     @cookies = cookies
-    @pincode = pincode
   end
 end

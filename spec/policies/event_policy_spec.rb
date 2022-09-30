@@ -1,76 +1,97 @@
 require 'rails_helper'
+require 'pundit/matchers'
 
 RSpec.describe EventPolicy do
-  subject { described_class }
+  subject { described_class.new(context, event) }
+  let(:context) { UserContext.new(user, cookies)}
+  let(:cookies) { {} }
+  let(:scope) { Pundit.policy_scope(user, Event) }
 
-  let(:user) { FactoryBot.create(:user) }
-  let(:alien_user) { FactoryBot.create(:user) }
+  context "user is event owner" do
+    let(:user) { User.new }
+    let(:event) { Event.new(user: user) }
 
-  let(:user_context) { UserContext.new(user, {}, '') }
-  let(:alien_user_context) { UserContext.new(alien_user, {}, '') }
-  let(:alien_user_context_with_correct_pin) { UserContext.new(alien_user, {}, 'qwerty') }
-  let(:alien_user_context_with_wrong_pin) { UserContext.new(alien_user, {}, '123321') }
-
-  let(:alien_user_context_with_correct_cookies) {
-    UserContext.new(alien_user, { "events_#{event_with_pin.id}_pincode" => 'qwerty' }, '')
-  }
-  let(:alien_user_context_with_wrong_cookies) {
-    UserContext.new(alien_user, { "events_#{event_with_pin.id}_pincode" => '123321' }, '')
-  }
-  let(:event) { FactoryBot.create(:event, user: user) }
-  let(:event_with_pin) { FactoryBot.create(:event, user: user, pincode: 'qwerty') }
-
-  permissions :update?, :edit?, :destroy? do
-    it 'gives access if user is event author' do
-      expect(subject).to permit(user_context, event)
+    describe "#show?" do
+      it { is_expected.to permit_action(:show) }
     end
 
-    it 'denies access if user is not event author' do
-      expect(subject).not_to permit(alien_user_context, event)
+    describe "#edit?" do
+      it { is_expected.to permit_action(:edit) }
+    end
+
+    describe "#update?" do
+      it { is_expected.to permit_action(:update) }
+    end
+
+    describe "#destroy?" do
+      it { is_expected.to permit_action(:destroy) }
+    end
+
+    describe "#create?" do
+      it { is_expected.to permit_action(:create) }
+    end
+
+    it "has access to all events" do
+      expect(scope.to_a).to match_array(Event.all.to_a)
     end
   end
 
-  permissions :show? do
-    context 'when user is event author' do
-      it 'shows event' do
-        expect(subject).to permit(user_context, event)
-      end
+  context "user is event visitor" do
+    let(:user) { User.new }
+    let(:event) { Event.new }
+
+    describe "#show?" do
+      it { is_expected.to permit_action(:show) }
     end
 
-    context 'when event has no pincode' do
-      it 'shows to any user' do
-        expect(subject).to permit(alien_user_context, event)
-      end
+    describe "#edit?" do
+      it { is_expected.not_to permit_action(:edit) }
     end
 
-    context 'when event is secured via pincode' do
-      it 'requires pincode and doesnt show event' do
-        expect(subject).not_to permit(alien_user_context, event_with_pin)
-      end
+    describe "#update?" do
+      it { is_expected.not_to permit_action(:update) }
+    end
 
-      context 'when user has correct pincode' do
-        it 'shows event' do
-          expect(subject).to permit(alien_user_context_with_correct_pin, event_with_pin)
-        end
-      end
+    describe "#destroy?" do
+      it { is_expected.not_to permit_action(:destroy) }
+    end
 
-      context 'when user has bad pincode' do
-        it 'doesnt show event' do
-          expect(subject).not_to permit(alien_user_context_with_wrong_pin, event_with_pin)
-        end
-      end
+    describe "#create?" do
+      it { is_expected.to permit_action(:create) }
+    end
 
-      context 'when cookies have correct pincode' do
-        it 'shows event' do
-          expect(subject).to permit(alien_user_context_with_correct_cookies, event_with_pin)
-        end
-      end
+    it "has access to all events" do
+      expect(scope.to_a).to match_array(Event.all.to_a)
+    end
+  end
 
-      context 'when cookies have bad pincode' do
-        it 'doesnt show event' do
-          expect(subject).not_to permit(alien_user_context_with_wrong_cookies, event_with_pin)
-        end
-      end
+  context "user is guest" do
+    let(:user) { nil }
+    let(:owner) { User.new }
+    let(:event) { Event.new(user: owner) }
+
+    describe "#show?" do
+      it { is_expected.to permit_action(:show) }
+    end
+
+    describe "#edit?" do
+      it { is_expected.not_to permit_action(:edit) }
+    end
+
+    describe "#update?" do
+      it { is_expected.not_to permit_action(:update) }
+    end
+
+    describe "#destroy?" do
+      it { is_expected.not_to permit_action(:destroy) }
+    end
+
+    describe "#create?" do
+      it { is_expected.not_to permit_action(:create) }
+    end
+
+    it "has access to all events" do
+      expect(scope.to_a).to match_array(Event.all.to_a)
     end
   end
 end

@@ -1,28 +1,31 @@
 class EventsController < ApplicationController
   before_action :authenticate_user!, except: %i[show index]
   before_action :set_event, only: %i[show edit update destroy]
-  after_action :verify_authorized, only: %i[edit update destroy]
+  after_action :verify_authorized, except: %i[index]
 
   def index
-    @events = Event.all
+    @events = policy_scope(Event)
   end
 
   def show
     begin
-      authorize @event
-    rescue Pundit::NotAuthorizedError
-      if params[:pincode].present?
-        flash.now[:alert] = t('activerecord.controllers.events.wrong_pincode')
+      if params[:pincode].present? && @event.pincode_valid(params[:pincode])
+        cookies.permanent["events_#{@event.id}_pincode"] = params[:pincode]
       end
+      authorize @event
+      @new_comment = @event.comments.build(params[:comment])
+      @new_subscription = @event.subscriptions.build(params[:subscription])
+      @new_photo = @event.photos.build(params[:photo])
+    rescue Pundit::NotAuthorizedError
+      flash.now[:alert] = t('activerecord.controllers.events.wrong_pincode')
       render 'password_form'
     end
-    @new_comment = @event.comments.build(params[:comment])
-    @new_subscription = @event.subscriptions.build(params[:subscription])
-    @new_photo = @event.photos.build(params[:photo])
+
   end
 
   def new
     @event = current_user.events.build
+    authorize @event
   end
 
   def edit
@@ -32,6 +35,7 @@ class EventsController < ApplicationController
   def create
     @event = current_user.events.build(event_params)
 
+    authorize @event
     if @event.save
       redirect_to @event, notice: t('activerecord.controllers.events.created')
     else
