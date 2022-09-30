@@ -55,15 +55,20 @@ gem "jquery-rails"
 
 gem "pundit", "~>2.2"
 
+gem "resque", "1.27"
+gem "redis", "4.8"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 gem "bootsnap", require: false
 
 group :development, :test do
+  gem "letter_opener"
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'capistrano-resque', '~> 0.2.3', require: false
   gem 'capistrano-passenger', '~> 0.2'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler'

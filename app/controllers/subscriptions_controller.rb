@@ -2,23 +2,13 @@ class SubscriptionsController < ApplicationController
   before_action :set_event, only: [:create, :destroy]
   before_action :set_subscription, only: [:destroy]
 
-  # GET /subscriptions or /subscriptions.json
-  def index
-    @subscriptions = Subscription.all
-  end
-
-  # GET /subscriptions/new
-  def new
-    @subscription = Subscription.new
-  end
-
   # POST /subscriptions or /subscriptions.json
   def create
     @new_subscription = @event.subscriptions.build(subscription_params)
     @new_subscription.user = current_user
 
     if @new_subscription.save
-      EventMailer.subscription(@new_subscription).deliver_now
+      SubscriptionNotificationJob.perform_later(@new_subscription)
       redirect_to @event, notice: t('activerecord.controllers.subscriptions.created')
     else
       flash.now[:alert] = t('activerecord.controllers.subscriptions.error')

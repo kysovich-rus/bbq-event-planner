@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_event, only: [:create, :destroy]
   before_action :set_photo, only: [:destroy]
 
@@ -7,7 +8,7 @@ class PhotosController < ApplicationController
     @new_photo.user = current_user
 
     if @new_photo.save
-      notify_subscribers(@event, @new_photo)
+      RecordNotificationJob.perform_later(@event, @new_photo)
       redirect_to @event, notice: I18n.t('activerecord.controllers.photos.created')
     else
       flash.now[:alert] = t('activerecord.controllers.photos.error')
@@ -41,13 +42,5 @@ class PhotosController < ApplicationController
   # c единственным полем photo
   def photo_params
     params.fetch(:photo, {}).permit(:photo)
-  end
-
-  def notify_subscribers(event, photo)
-    all_emails = (event.subscriptions.map(&:user_email) + [event.user.email] - [photo.user&.email]).uniq
-
-    all_emails.each do |email|
-      EventMailer.photo(photo, email).deliver_now
-    end
   end
 end

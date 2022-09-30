@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   before_validation :set_name, on: :create
   after_commit :link_subscriptions, on: :create
+  after_create :send_notification
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -28,5 +29,9 @@ class User < ApplicationRecord
 
   def set_name
     self.name = "Господин(жа) №#{rand(999)}" if self.name.nil?
+  end
+
+  def send_notification
+    SignUpNotificationJob.perform_later(self)
   end
 end
