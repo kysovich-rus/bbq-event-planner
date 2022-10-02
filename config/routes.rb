@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   root to: "events#index"
+  require 'resque/server'
+  mount Resque::Server, at: '/jobs'
 
   devise_for :users, controllers: { registrations: "user/registrations" }
 

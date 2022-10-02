@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.17.1"
 
-set :application, "bbq-event-planner"
+set :application, "bbq"
 set :repo_url, "https://github.com/kysovich-rus/bbq-event-planner.git"
 
 # Default branch is :master
@@ -22,7 +22,12 @@ set :deploy_to, "/home/deploy/apps/bbq"
 
 set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/master.key', '.env')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
+
+after 'deploy:restart', 'resque:restart'
+
 set :rbenv_path, '/home/deploy/.rbenv'
+
+set :branch, ENV['branch'] if ENV['branch']
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

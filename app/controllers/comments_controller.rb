@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     @new_comment.user = current_user
 
     if check_captcha(@new_comment) && @new_comment.save
-      RecordNotificationJob.perform_later(@event, [@new_comment])
+      CommentNotificationJob.perform_later(@new_comment)
       redirect_to @event, notice: t('activerecord.controllers.comments.created')
     else
       render 'events/show', alert: t('activerecord.controllers.comments.error')

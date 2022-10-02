@@ -6,15 +6,12 @@
 role :app, %w{deploy@bbq-gp.site}
 role :web, %w{deploy@bbq-gp.site}
 role :db,  %w{deploy@bbq-gp.site}
+role :resque_worker, %w{deploy@bbq-gp.site}
 
-
-server "bbq-gp.site", user: "deploy", roles: %w{app db web resque_worker}, my_property: :my_value
+server "bbq-gp.site", user: "deploy", roles: %w{app db web resque_worker}
 
 set :resque_environment_task, true
-
 set :workers, { "#{fetch(:application)}*" => 1 }
-
-
 
 # role-based syntax
 # ==================

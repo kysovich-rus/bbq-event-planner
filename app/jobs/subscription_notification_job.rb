@@ -2,6 +2,6 @@ class SubscriptionNotificationJob < ApplicationJob
   queue_as :default
 
   def perform(subscription)
-    EventMailer.subscription(subscription).deliver_later
+    EventMailer.subscription(subscription).deliver_now
   end
 end
