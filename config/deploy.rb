@@ -5,7 +5,7 @@ set :application, "bbq"
 set :repo_url, "https://github.com/kysovich-rus/bbq-event-planner.git"
 
 # Default branch is :master
-# ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
+ask :branch, ENV['BRANCH'] if ENV['BRANCH']
 
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deploy/apps/bbq"
