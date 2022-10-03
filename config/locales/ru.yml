@@ -73,6 +73,8 @@ ru:
     send: 'Отправить'
     cancel: 'оставить, как есть'
     destroy_confirm: 'Уверены? Отменить данное действие будет нельзя'
+    login_with:
+      google: 'Войти с помощью аккаунта Google'
     user:
       edit: 'Редактировать профиль'
       edit_registration: 'Сменить пароль'

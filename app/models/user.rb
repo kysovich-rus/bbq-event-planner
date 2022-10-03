@@ -5,11 +5,12 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable
+         :recoverable, :rememberable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
-  has_many :events
+  has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :subscriptions
+  has_many :subscriptions, dependent: :destroy
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_fill: [70, 70]
     attachable.variant :default, resize_to_fill: [200, 200]
@@ -19,6 +20,23 @@ class User < ApplicationRecord
   validates :email, presence: true, length: {maximum: 255}
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
+
+  def self.from_google(google_params)
+    email = google_params[:email]
+    name = google_params[:name]
+    user = where(email: email).first
+
+    return user if user.present?
+
+    provider = google_params[:provider]
+    uid = google_params[:uid]
+
+    where(uid: uid, provider: provider).first_or_create! do |user|
+      user.email = email
+      user.name = name
+      user.password = Devise.friendly_token.first(16)
+    end
+  end
 
   private
 
