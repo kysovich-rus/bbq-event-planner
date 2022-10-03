@@ -60,6 +60,7 @@ gem "redis", "4.8"
 
 gem "omniauth"
 gem "omniauth-google-oauth2"
+gem "omniauth-github", github: "omniauth/omniauth-github", branch: "master"
 gem "omniauth-rails_csrf_protection"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
