@@ -6,7 +6,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,
-         :omniauthable, omniauth_providers: [:google_oauth2, :github]
+         :omniauthable, omniauth_providers: [:google_oauth2, :github, :vkontakte]
 
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -42,7 +42,6 @@ class User < ApplicationRecord
     # Достаём email из токена
     email = github_params[:email]
     name = github_params[:name]
-    puts "EMAIL: #{email}"
     user = where(email: email).first
 
     # Возвращаем, если нашёлся
@@ -50,8 +49,33 @@ class User < ApplicationRecord
 
     # Если не нашёлся, достаём провайдера, айдишник и урл
     provider = github_params[:provider]
-    uid = github_params[:id]
+    uid = github_params[:uid]
     url = "https://github.com/#{uid}"
+
+    # Теперь ищем в базе запись по провайдеру и урлу
+    # Если есть, то вернётся, если нет, то будет создана новая
+    where(url: url, provider: provider).first_or_create! do |user|
+      # Если создаём новую запись, прописываем email и пароль
+      user.uid = uid
+      user.name = name
+      user.email = email
+      user.password = Devise.friendly_token.first(16)
+    end
+  end
+
+  def self.from_vkontakte(vkontakte_params)
+    # Достаём email из токена
+    email = vkontakte_params[:email]
+    name = vkontakte_params[:name]
+    user = where(email: email).first
+
+    # Возвращаем, если нашёлся
+    return user if user.present?
+
+    # Если не нашёлся, достаём провайдера, айдишник и урл
+    provider = vkontakte_params[:provider]
+    uid = vkontakte_params[:uid]
+    url = vkontakte_params[:url]
 
     # Теперь ищем в базе запись по провайдеру и урлу
     # Если есть, то вернётся, если нет, то будет создана новая
