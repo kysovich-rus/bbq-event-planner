@@ -274,6 +274,11 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :google_oauth2, ENV['GOOGLE_OAUTH_CLIENT_ID'], ENV['GOOGLE_OAUTH_CLIENT_SECRET']
   config.omniauth :github, ENV['GITHUB_OAUTH_CLIENT_ID'], ENV['GITHUB_OAUTH_CLIENT_SECRET'], scope: 'user,public_repo'
+  config.omniauth :vkontakte, ENV['VK_OAUTH_CLIENT_ID'], ENV['VK_OAUTH_CLIENT_SECRET'], {
+    token_params: { parse: :json },
+    scope: 'email',
+    redirect_uri: 'http://bbq-gp.site/users/auth/vkontakte/callback'
+  }
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
