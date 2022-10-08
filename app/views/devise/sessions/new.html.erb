@@ -33,7 +33,8 @@
 <h2 class="display-6"><%= t('titles.user.oauth') %></h2>
 <div>
   <%= button_to bi_icon('google') + " Google", user_google_oauth2_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-outline-dark mb-2" %>
-  <%= button_to bi_icon('github') + " Github", user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-outline-dark" %>
+  <%= button_to bi_icon('github') + " Github", user_github_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-outline-dark mb-2" %>
+  <%= button_to bi_icon('box') + " VK", user_vkontakte_omniauth_authorize_path, method: :post, data: { turbo: false }, class: "btn btn-outline-dark" %>
 </div>
 
 <%= render "devise/shared/links" %>

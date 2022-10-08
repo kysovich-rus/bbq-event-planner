@@ -58,10 +58,12 @@ gem "pundit", "~> 2.2"
 gem "resque"
 gem "redis", "4.8"
 
-gem "omniauth"
+gem "omniauth",  "~> 2.1"
 gem "omniauth-google-oauth2"
-gem "omniauth-github", github: "omniauth/omniauth-github", branch: "master"
-gem "omniauth-rails_csrf_protection"
+gem "omniauth-vkontakte", "=1.7"
+# gem "omniauth-github", github: "omniauth/omniauth-github", branch: "master"
+gem "omniauth-github"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
