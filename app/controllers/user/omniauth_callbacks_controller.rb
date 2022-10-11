@@ -1,62 +1,26 @@
 class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
-    user = User.from_google(from_google_params)
-
-    if user.present?
-      sign_out_all_scopes
-      flash[:notice] = t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect user, event: :authentication
-    else
-      flash[:alert] = t 'devise.omniauth_callbacks.failure', kind: 'Google', reason: "#{auth.info.email} is not authorized."
-      redirect_to new_user_session_path
-    end
-  end
-
-  def from_google_params
-    @from_google_params ||= {
-      provider: auth.provider,
-      name: auth.info.name,
-      uid: auth.uid,
-      email: auth.info.email
-    }
+    authorize_oauth_user(from_google_params)
   end
 
   def github
-    @user = User.from_github(from_github_params)
-
-    if @user.persisted?
-      flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: 'Github')
-      sign_in_and_redirect @user, event: :authentication
-    else
-      flash[:error] = I18n.t(
-        'devise.omniauth_callbacks.failure',
-        kind: 'Github',
-        reason: 'authentication error'
-      )
-
-      redirect_to new_user_session_path
-    end
-  end
-
-  def from_github_params
-    @from_github_params ||= {
-      provider: auth.provider,
-      name: auth.info.name,
-      uid: auth.extra.raw_info.id,
-      email: auth.info.email
-    }
+    authorize_oauth_user(from_github_params)
   end
 
   def vkontakte
-    @user = User.from_vkontakte(from_vkontakte_params)
+    authorize_oauth_user(from_vkontakte_params)
+  end
+
+  def authorize_oauth_user(params)
+    @user = User.oauth(params)
 
     if @user.persisted?
-      flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: 'VK')
+      flash[:notice] = I18n.t('devise.omniauth_callbacks.success', kind: params[:kind])
       sign_in_and_redirect @user, event: :authentication
     else
       flash[:error] = I18n.t(
         'devise.omniauth_callbacks.failure',
-        kind: 'VK',
+        kind: params[:kind],
         reason: 'authentication error'
       )
 
@@ -70,7 +34,29 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       name: auth.info.name,
       uid: auth.extra.raw_info.id,
       email: auth.info.email,
-      url: auth.extra.raw_info.html_url
+      url: auth.extra.raw_info.html_url,
+      kind: 'VK'
+    }
+  end
+
+  def from_google_params
+    @from_google_params ||= {
+      provider: auth.provider,
+      name: auth.info.name,
+      uid: auth.uid,
+      email: auth.info.email,
+      kind: 'Google'
+    }
+  end
+
+  def from_github_params
+    @from_github_params ||= {
+      provider: auth.provider,
+      name: auth.info.name,
+      uid: auth.extra.raw_info.id,
+      email: auth.info.email,
+      url: "https://github.com/#{uid}",
+      kind: 'Github'
     }
   end
 

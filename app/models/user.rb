@@ -21,67 +21,26 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
 
-  def self.from_google(google_params)
-    email = google_params[:email]
-    name = google_params[:name]
+  def self.oauth(params)
+    # Достаём email из токена
+    email = params[:email]
+    name = params[:name]
     user = where(email: email).first
 
+    # Возвращаем, если нашёлся
     return user if user.present?
 
-    provider = google_params[:provider]
-    uid = google_params[:uid]
+    # Если не нашёлся, достаём провайдера, айдишник и урл
+    provider = params[:provider]
+    uid = params[:uid]
+    url = params[:url]
 
+    # Теперь ищем в базе запись по провайдеру и урлу
+    # Если есть, то вернётся, если нет, то будет создана новая
     where(uid: uid, provider: provider).first_or_create! do |user|
-      user.email = email
-      user.name = name
-      user.password = Devise.friendly_token.first(16)
-    end
-  end
-
-  def self.from_github(github_params)
-    # Достаём email из токена
-    email = github_params[:email]
-    name = github_params[:name]
-    user = where(email: email).first
-
-    # Возвращаем, если нашёлся
-    return user if user.present?
-
-    # Если не нашёлся, достаём провайдера, айдишник и урл
-    provider = github_params[:provider]
-    uid = github_params[:uid]
-    url = "https://github.com/#{uid}"
-
-    # Теперь ищем в базе запись по провайдеру и урлу
-    # Если есть, то вернётся, если нет, то будет создана новая
-    where(url: url, provider: provider).first_or_create! do |user|
       # Если создаём новую запись, прописываем email и пароль
       user.uid = uid
-      user.name = name
-      user.email = email
-      user.password = Devise.friendly_token.first(16)
-    end
-  end
-
-  def self.from_vkontakte(vkontakte_params)
-    # Достаём email из токена
-    email = vkontakte_params[:email]
-    name = vkontakte_params[:name]
-    user = where(email: email).first
-
-    # Возвращаем, если нашёлся
-    return user if user.present?
-
-    # Если не нашёлся, достаём провайдера, айдишник и урл
-    provider = vkontakte_params[:provider]
-    uid = vkontakte_params[:uid]
-    url = vkontakte_params[:url]
-
-    # Теперь ищем в базе запись по провайдеру и урлу
-    # Если есть, то вернётся, если нет, то будет создана новая
-    where(url: url, provider: provider).first_or_create! do |user|
-      # Если создаём новую запись, прописываем email и пароль
-      user.uid = uid
+      user.url = url
       user.name = name
       user.email = email
       user.password = Devise.friendly_token.first(16)
