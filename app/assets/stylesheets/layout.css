@@ -35,6 +35,10 @@
   margin-bottom: 20px;
 }
 
+.footer {
+    height: 0.75rem;
+}
+
 /* Avatars for users & events */
 .img-icon, .img-icon-small {
   height: 50px;
