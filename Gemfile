@@ -54,7 +54,6 @@ gem "bcrypt_pbkdf"
 gem "jquery-rails"
 
 gem "pundit", "~> 2.2"
-
 gem "resque"
 gem "redis", "4.8"
 

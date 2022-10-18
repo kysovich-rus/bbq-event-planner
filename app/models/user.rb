@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ApplicationRecord
   before_validation :set_name, on: :create
   after_commit :link_subscriptions, on: :create
@@ -11,6 +13,8 @@ class User < ApplicationRecord
   has_many :events, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
+  has_many :photos, dependent: :destroy
+
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_fill: [70, 70]
     attachable.variant :default, resize_to_fill: [200, 200]
@@ -21,28 +25,21 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
 
-  def self.oauth(params)
-    # Достаём email из токена
-    email = params[:email]
-    name = params[:name]
-    user = where(email: email).first
+  def self.from_oauth(response)
+    email = response.info.email
+    name = response.info.name
+    provider = response.provider
+    uid = response.uid
+    user = User.where(email: email).first
 
-    # Возвращаем, если нашёлся
     return user if user.present?
 
-    # Если не нашёлся, достаём провайдера, айдишник и урл
-    provider = params[:provider]
-    uid = params[:uid]
-    url = params[:url]
-
-    # Теперь ищем в базе запись по провайдеру и урлу
-    # Если есть, то вернётся, если нет, то будет создана новая
     where(uid: uid, provider: provider).first_or_create! do |user|
-      # Если создаём новую запись, прописываем email и пароль
       user.uid = uid
-      user.url = url
       user.name = name
       user.email = email
+      image_src = URI.parse(response.info.image).open
+      user.avatar.attach(io: image_src, filename: 'avatar.png')
       user.password = Devise.friendly_token.first(16)
     end
   end
