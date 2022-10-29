@@ -20,7 +20,7 @@ class User < ApplicationRecord
     attachable.variant :default, resize_to_fill: [200, 200]
   end
 
-  validates :name, presence: true, length: {maximum: 35}
+  validates :name, presence: true, length: {maximum: 64}
   validates :email, presence: true, length: {maximum: 255}
   validates :email, uniqueness: true
   validates :email, format: /\A[a-zA-Z0-9\-_.]+@[a-zA-Z0-9\-_.]+\z/
@@ -40,6 +40,7 @@ class User < ApplicationRecord
       user.email = email
       image_src = URI.parse(response.info.image).open
       user.avatar.attach(io: image_src, filename: 'avatar.png')
+
       user.password = Devise.friendly_token.first(16)
     end
   end
